@@ -1,5 +1,5 @@
-function NewRectangle(settings, screen)
-	local index = settings.Index or 3
+return(function(settings, screen)
+	local index = settings.Index or "Objects"
 	local Physics = settings.Physics
 	local object = { 
 		["Position"] = settings.Position or {0, 0},
@@ -20,8 +20,10 @@ function NewRectangle(settings, screen)
 		object.Physics.fixture = love.physics.newFixture(object.Physics.body, object.Physics.shape)
 	end
 	
+	local screen_position = screen:AddObject(object, object.Index)
+	
 	function object:Destroy()
-		screen:remove_Object(self)
+		screen:RemoveObject(screen_position)
 		object = nil
 		self = nil
 	end
@@ -54,6 +56,5 @@ function NewRectangle(settings, screen)
 		self.Span = span
 	end
 
-	screen:add_Object(object, object.Index)
 	return object
-end
+end)
